@@ -3,12 +3,14 @@
 import sqlite3
 import pandas as pd
 from pathlib import Path
+import pandas as pd
+from .sql_execution import QueryMixin
 
 # Define a class called QueryBase
 # Use inheritance to add methods
 # for querying the employee_events database.
 # YOUR CODE HERE
-class QueryBase:
+class QueryBase(QueryMixin):
     # Create a class attribute called `name`
     # set the attribute to an empty string
     # YOUR CODE HERE
@@ -52,10 +54,7 @@ class QueryBase:
             event_date
         """  
         # Execute the query and return as dataframe
-        conn = sqlite3.connect('python-package/employee_events/employee_events.db')
-        result = pd.read_sql_query(query, conn)
-        conn.close()
-        return result 
+        return self.pandas_query(query)
     
 
     # Define a `notes` method that receives an id argument
@@ -83,8 +82,5 @@ class QueryBase:
             note_date DESC
         """
         # Execute the query and return as dataframe
-        conn = sqlite3.connect('python-package/employee_events/employee_events.db')
-        result = pd.read_sql_query(query, conn)
-        conn.close()
-        return result
+        return self.pandas_query(query)
 
